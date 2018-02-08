@@ -24,31 +24,32 @@ fun main(args: Array<String>) {
     pool.shutdown()
 }
 
-data class Book(val rmutex: Semaphore, val wmutex: Semaphore, var name: String) {
-    val reader = ReentrantLock()
-    val writer = ReentrantLock()
+data class Book(val rmutex: Semaphore, val wmutex: Semaphore, @Volatile var name: String) {
+    // 只能同时有一个对文章进行修改
+    val wlock = ReentrantLock()
+    // 读者的容量
+    val maxRmutex = rmutex.availablePermits()
 }
 
 class Reader(private val book: Book) : Runnable {
     override fun run() {
         book.rmutex.acquire()
-        book.writer.lock()
-        Thread.sleep(2)
         println(Thread.currentThread().name + "read.. ${book.name}")
-        book.writer.unlock()
+        Thread.sleep(1)
         book.rmutex.release()
-
     }
 }
 
 class Writer(private val book: Book) : Runnable {
     override fun run() {
         book.wmutex.acquire()
-        book.reader.lock()
-        Thread.sleep(10)
+        book.rmutex.acquire(book.maxRmutex)
+        Thread.sleep(1)
+        book.wlock.lock()
         book.name += "."
         println(Thread.currentThread().name + "write ...")
-        book.reader.unlock()
+        book.wlock.unlock()
+        book.rmutex.release(book.maxRmutex)
         book.wmutex.release()
     }
 }
