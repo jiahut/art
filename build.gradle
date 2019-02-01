@@ -30,20 +30,22 @@ apply plugin: "idea"
 
 
 //  https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html
-task run(type: JavaExec, dependsOn: classes){
-  if(project.hasProperty('mainArgs')){
-    args(arg.split(','))
-  }
-  // jvmArgs = [
-  //   "-Dkey=value"
-  // ]
-  main = project.getProperty('mainClass')
-  classpath = sourceSets.main.runtimeClasspath
-  systemProperties System.getProperties()
+task run(type: JavaExec, dependsOn: classes) {
+    if (project.hasProperty('mainArgs')) {
+        args(arg.split(','))
+    }
+    // jvmArgs = [
+    //   "-Dkey=value"
+    // ]
+    if (project.hasProperty('mainClass')) {
+        main = project.getProperty('mainClass')
+    }
+    classpath = sourceSets.main.runtimeClasspath
+    systemProperties System.getProperties()
 }
 
 repositories {
-    maven { url  "https://dl.bintray.com/kotlin/exposed" }
+    maven { url "https://dl.bintray.com/kotlin/exposed" }
     mavenCentral()
 }
 dependencies {
