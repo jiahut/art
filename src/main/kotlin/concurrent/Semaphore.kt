@@ -5,6 +5,7 @@ import java.util.concurrent.Semaphore
 
 /**
  * 信号量，通过计数器控制对共享资源的访问
+ *       可用于限制了同时能访问资源的数量
  */
 
 fun main(args: Array<String>) {
@@ -16,9 +17,9 @@ fun main(args: Array<String>) {
         Thread {
             semaphore.acquire()
             println("thread ${Thread.currentThread().name} acquire")
-            val time = randow.nextInt(10)
-            println("thread ${Thread.currentThread().name} sleep $time s")
-            Thread.sleep(1000L * time)
+            val timeOut = randow.nextInt(10) + 1
+            println("thread ${Thread.currentThread().name} sleep $timeOut s")
+            Thread.sleep(1000L * timeOut)
             println("thread ${Thread.currentThread().name} release")
             semaphore.release()
         }.start()

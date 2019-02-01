@@ -3,8 +3,12 @@
 记录架构与设计
 
 
+### startup
 
-参考：
+> gradle run -PmainClass=concurrent.AtomKt
+
+
+### 参考
 
 
   [art@知乎专栏](https://zhuanlan.zhihu.com/c_118169506)

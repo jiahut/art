@@ -13,11 +13,12 @@ import java.util.concurrent.locks.ReentrantLock
 fun main(args: Array<String>) {
     val r = Semaphore(5)
     val w = Semaphore(2)
-    val d = Book(r, w, "book")
+    val d = Book(r, w, "java从入门到放弃 version=0")
     var pool = Executors.newFixedThreadPool(7)
     (1..100).forEach {
         pool.submit(Reader(d))
-        if (it % 20 == 0) {
+        // 读了一段时间管理员检查一下
+        if (it % 30 == 0) {
             pool.submit(Writer(d))
         }
     }
@@ -45,9 +46,10 @@ class Writer(private val book: Book) : Runnable {
         book.wmutex.acquire()
         book.rmutex.acquire(book.maxRmutex)
         Thread.sleep(1)
-        book.wlock.lock()
-        book.name += "."
-        println(Thread.currentThread().name + "write ...")
+        var bookInfo = book.name.split("=")
+        val nextVersion = Integer.parseInt(bookInfo[1]) + 1
+        book.name = arrayOf(bookInfo[0], nextVersion).joinToString("=")
+        println(Thread.currentThread().name + "change version = $nextVersion")
         book.wlock.unlock()
         book.rmutex.release(book.maxRmutex)
         book.wmutex.release()

@@ -13,13 +13,17 @@ fun main(args: Array<String>) {
     val putPool = Executors.newFixedThreadPool(2)
     val queue = ProductQueue<String>(10)
     (1..100).forEach {
+
+        putPool.submit {
+            queue.put("hello ${it}")
+            println("put the ${it}")
+        }
+
         takePool.submit {
             var t = queue.take()
             println("take the ${t}")
         }
-        putPool.submit {
-            queue.put("hello ${it}")
-        }
+
     }
     takePool.shutdown()
     putPool.shutdown()

@@ -9,7 +9,7 @@
 //https://kotlinlang.org/docs/reference/using-gradle.html
 
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.31'
 
     repositories {
         mavenCentral()
@@ -22,12 +22,35 @@ buildscript {
 
 apply plugin: "kotlin"
 apply plugin: "idea"
+// apply plugin: 'application'
+
+// mainClassName = 'concurrent.AtomKt'
+
+// defaultTasks 'run'
+
+
+//  https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html
+task run(type: JavaExec, dependsOn: classes){
+  if(project.hasProperty('mainArgs')){
+    args(arg.split(','))
+  }
+  // jvmArgs = [
+  //   "-Dkey=value"
+  // ]
+  main = project.getProperty('mainClass')
+  classpath = sourceSets.main.runtimeClasspath
+  systemProperties System.getProperties()
+}
+
 repositories {
+    maven { url  "https://dl.bintray.com/kotlin/exposed" }
     mavenCentral()
 }
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.2.0'
+    compile 'org.jetbrains.exposed:exposed:0.10.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.+'
 }
 compileKotlin {
     kotlinOptions {
