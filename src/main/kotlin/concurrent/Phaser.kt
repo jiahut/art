@@ -16,8 +16,9 @@ fun main(args: Array<String>) {
         Thread {
             println("thread ${Thread.currentThread().name} is ready. ")
             phaser.arriveAndAwaitAdvance()
+            // 所有线程都准备好了才开始
             println("thread ${Thread.currentThread().name} start")
-            Thread.sleep(1000L * (random.nextInt(10) + 1))
+            Thread.sleep(1000L * (random.nextInt(5) + 1))
             println("thread ${Thread.currentThread().name} end")
             phaser.arriveAndDeregister()
         }.start()

@@ -14,16 +14,17 @@ fun main(args: Array<String>) {
 
 class Buyer(private val exchanger: Exchanger<String>) : Thread() {
     override fun run() {
-        val exchange = exchanger.exchange("100")
-        println("thread $name buy $exchange")
+        val money = "$100";
+        val good = exchanger.exchange(money)
+        println("thread $name buy $good with $money")
     }
 }
 
 class Seller(private val exchanger: Exchanger<String>) : Thread() {
-
     override fun run() {
         println("waiting for buyer comming")
-        val exchange = exchanger.exchange("apple")
-        println("thread $name sell with $exchange money ")
+        val good = "apple"
+        val money = exchanger.exchange(good)
+        println("thread $name sell $good with $money ")
     }
 }
