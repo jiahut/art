@@ -4,6 +4,7 @@ import java.lang.Exception
 
 class MessageChannelManager {
     fun <T, R> send(params: T, action: (MessageSend, T) -> R): R {
+        // Spring可以用context.getBeansOf(MessageSend.class)
         val messageServices = mutableListOf<MessageSend>()
         messageServices.add(MessageSendChannelA())
         messageServices.add(MessageSendChannelB())
