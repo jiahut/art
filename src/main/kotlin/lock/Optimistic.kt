@@ -57,7 +57,7 @@ fun main(args: Array<String>) {
             transaction {
                 drop(Accounts,Users)
             }
-            break;
+            break
         }
     }
 }
