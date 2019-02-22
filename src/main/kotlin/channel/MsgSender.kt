@@ -2,7 +2,7 @@ package channel
 
 import java.util.*
 
-class MsgSender : Sender<String, String> {
+class MsgSender : Sender<String, String>, SendOrder {
 
     override fun send(msg: String): Optional<String> {
         println("[MsgSender] send $msg")
@@ -12,5 +12,7 @@ class MsgSender : Sender<String, String> {
     override fun type(): String {
         return "msg"
     }
+
+    override fun order() = 0
 
 }
