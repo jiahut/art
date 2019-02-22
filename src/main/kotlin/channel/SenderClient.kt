@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
 
     senders3.select {
         it.type().length > 1
-    }.sendTailSuccess{
+    }.sendTillSuccess{
         it.send("verification code 120")
     }
 }

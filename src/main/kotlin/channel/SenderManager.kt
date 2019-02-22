@@ -32,7 +32,7 @@ fun <T, R> List<out Sender<T,R>>.sendByOrder(action: (Sender<T,R>) -> Optional<R
 }
 
 
-fun <T, R> List<out Sender<T,R>>.sendTailSuccess(action: (Sender<T,R>) -> Optional<R>) {
+fun <T, R> List<out Sender<T,R>>.sendTillSuccess(action: (Sender<T,R>) -> Optional<R>) {
     this.sortedBy {
         it as SendOrder
         it.order()
