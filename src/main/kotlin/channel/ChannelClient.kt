@@ -2,8 +2,8 @@ package channel
 
 fun main(args: Array<String>) {
     val senders = SenderManager.buildSenderList<String, String>()
-    senders.register(MailSender())
-    senders.register(MsgSender())
+    senders.register(MailChannel())
+    senders.register(MsgChannel())
 
     senders.select {
         it.type().length > 1
@@ -14,8 +14,8 @@ fun main(args: Array<String>) {
 
     println("-------------------------------")
     val senders2 = SenderManager.buildSenderList<String, String>()
-    senders2.register(MailSender())
-    senders2.register(MsgSender())
+    senders2.register(MailChannel())
+    senders2.register(MsgChannel())
 
     senders2.select {
         it.type().length > 1
@@ -27,8 +27,8 @@ fun main(args: Array<String>) {
 
     println("-------------------------------")
     val senders3 = SenderManager.buildSenderList<String, String>()
-    senders3.register(MailSender())
-    senders3.register(MsgSender())
+    senders3.register(MailChannel())
+    senders3.register(MsgChannel())
 
     senders3.select {
         it.type().length > 1

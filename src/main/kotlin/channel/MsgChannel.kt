@@ -2,10 +2,10 @@ package channel
 
 import java.util.*
 
-class MsgSender : Sender<String, String>, SendOrder {
+class MsgChannel : Channel<String, String>, ChannelOrder {
 
     override fun send(msg: String): Optional<String> {
-        println("[MsgSender] send $msg")
+        println("[MsgChannel] send $msg")
         return Optional.empty()
     }
 

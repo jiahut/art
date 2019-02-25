@@ -2,11 +2,11 @@ package channel
 
 import java.util.*
 
-interface Sender<T,R> {
+interface Channel<T,R> {
     fun send(msg: T): Optional<R>
     fun type():String
 }
 
-interface SendOrder {
+interface ChannelOrder {
     fun order(): Int
 }

@@ -2,10 +2,10 @@ package channel
 
 import java.util.*
 
-class MailSender : Sender<String, String>, SendOrder {
+class MailChannel : Channel<String, String>, ChannelOrder {
 
     override fun send(mail: String):Optional<String> {
-        println("[MailSender] send $mail")
+        println("[MailChannel] send $mail")
         // return  Optional.empty()
         return Optional.of("ok")
     }
